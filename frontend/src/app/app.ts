@@ -57,6 +57,13 @@ export class App implements OnInit {
     this.charger();
   }
 
+  /** Compteur par statut pour les boutons de filtre. */
+  protected compteParStatut(statut: FiltreStatut): number {
+    const liste = this.tickets();
+    if (statut === 'Tous') return liste.length;
+    return liste.filter(t => t.statut === statut).length;
+  }
+
   /** Après une création réussie : rafraîchir la liste sans recharger la page. */
   protected rafraichir(): void {
     this.compteurTicket.update(n => n + 1);
@@ -68,6 +75,24 @@ export class App implements OnInit {
     this.idFermetureEnCours.set(id);
 
     this.api.fermer(id).subscribe({
+      next: () => {
+        this.idFermetureEnCours.set(null);
+        this.compteurTicket.update(n => n + 1);
+        this.charger();
+      },
+      error: (ex: HttpErrorResponse) => {
+        const err = this.api.extraireErreur(ex);
+        this.idFermetureEnCours.set(null);
+        this.erreurFermeture.set(err.message);
+      }
+    });
+  }
+
+  protected demarrer(id: number): void {
+    this.erreurFermeture.set(null);
+    this.idFermetureEnCours.set(id);
+
+    this.api.marquerEnCours(id).subscribe({
       next: () => {
         this.idFermetureEnCours.set(null);
         this.compteurTicket.update(n => n + 1);

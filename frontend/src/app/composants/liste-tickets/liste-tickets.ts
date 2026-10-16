@@ -18,11 +18,16 @@ export class ListeTickets {
   readonly erreurFermeture = input<string | null>(null);
 
   readonly fermerTicket = output<number>();
+  readonly marquerEnCours = output<number>();
 
   protected statuts = ['OUVERT', 'EN_COURS', 'FERME'] as const;
 
   protected peutFermer(statut: Ticket['statut']): boolean {
     return statut === 'OUVERT' || statut === 'EN_COURS';
+  }
+
+  protected peutDemarrer(statut: Ticket['statut']): boolean {
+    return statut === 'OUVERT';
   }
 
   protected cliquerFermer(ticket: Ticket): void {

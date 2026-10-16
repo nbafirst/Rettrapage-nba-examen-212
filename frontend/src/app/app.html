@@ -19,6 +19,7 @@
           (click)="changerFiltre(f)"
         >
           {{ f }}
+          <span class="compteur-filtre">{{ compteParStatut(f) }}</span>
         </button>
       }
     </div>
@@ -44,6 +45,7 @@
             [idFermetureEnCours]="idFermetureEnCours()"
             [erreurFermeture]="erreurFermeture()"
             (fermerTicket)="fermer($event)"
+            (marquerEnCours)="demarrer($event)"
           />
         }
       }

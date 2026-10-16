@@ -59,6 +59,19 @@ public class TicketController {
         return service.lister(statut).stream().map(TicketResponse::from).toList();
     }
 
+    @PatchMapping("/{id}/en-cours")
+    @Operation(summary = "Marquer un ticket en cours", description = "Passe un ticket OUVERT en EN_COURS (idempotent si déjà EN_COURS). Un ticket FERME ne revient pas en arrière (RG-03).")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Ticket marqué EN_COURS"),
+            @ApiResponse(responseCode = "404", description = "Ticket introuvable"),
+            @ApiResponse(responseCode = "409", description = "RG-03 : ticket FERME")
+    })
+    public ResponseEntity<TicketResponse> marquerEnCours(
+            @Parameter(description = "Identifiant du ticket")
+            @PathVariable Long id) {
+        return ResponseEntity.ok(TicketResponse.from(service.marquerEnCours(id)));
+    }
+
     @PatchMapping("/{id}/fermer")
     @Operation(summary = "Fermer un ticket", description = "RG-03 : un ticket FERME ne change plus d'état.")
     @ApiResponses({

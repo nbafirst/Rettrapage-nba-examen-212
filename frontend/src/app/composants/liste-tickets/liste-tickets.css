@@ -97,6 +97,42 @@
   color: var(--gris-texte);
 }
 
+/* ---------- Cellule actions ---------- */
+.cellule-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ---------- Bouton commencer ---------- */
+.bouton-action {
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--bleu-clair);
+  border-radius: 8px;
+  background: var(--bleu-fond);
+  color: var(--bleu-fonce);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition),
+              box-shadow var(--transition), transform var(--transition);
+}
+
+.bouton-action:hover:not(:disabled) {
+  background: var(--bleu-clair);
+  border-color: var(--bleu-primaire);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.18);
+}
+
+.bouton-action:active:not(:disabled) { transform: scale(0.97); }
+
+.bouton-action:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 /* ---------- Bouton fermer ---------- */
 .bouton-fermer {
   padding: 0.35rem 0.9rem;

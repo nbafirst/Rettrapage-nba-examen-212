@@ -37,6 +37,10 @@ export class TicketApiService {
     return this.http.patch<Ticket>(`${this.baseUrl}/${id}/fermer`, {});
   }
 
+  marquerEnCours(id: number): Observable<Ticket> {
+    return this.http.patch<Ticket>(`${this.baseUrl}/${id}/en-cours`, {});
+  }
+
   /** Extrait le message structuré du serveur en préservant le statut HTTP. */
   extraireErreur(ex: HttpErrorResponse): ApiErreur {
     const corps = ex.error as ApiErreur | null;

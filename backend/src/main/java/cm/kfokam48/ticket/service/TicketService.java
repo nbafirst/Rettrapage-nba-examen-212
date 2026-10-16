@@ -56,4 +56,19 @@ public class TicketService {
         ticket.setStatut(StatutTicket.FERME);
         return repository.save(ticket);
     }
+
+    /**
+     * Passe un ticket OUVERT en EN_COURS. Idempotent sur un ticket déjà EN_COURS.
+     * Un ticket FERME ne revient jamais en arrière (RG-03).
+     */
+    @Transactional
+    public Ticket marquerEnCours(Long id) {
+        Ticket ticket = repository.findById(id)
+                .orElseThrow(() -> new TicketIntrouvableException(id));
+        if (ticket.getStatut() == StatutTicket.FERME) {
+            throw new TicketDejaFermeException(id);
+        }
+        ticket.setStatut(StatutTicket.EN_COURS);
+        return repository.save(ticket);
+    }
 }
