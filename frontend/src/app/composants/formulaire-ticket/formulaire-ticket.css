@@ -1,53 +1,105 @@
 .formulaire-ticket {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  border: 1px solid #e2e5ec;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  background: #fff;
+  gap: 0.65rem;
+  border: 1px solid var(--gris-bordure);
+  border-radius: var(--rayon);
+  padding: 1.4rem 1.5rem 1.5rem;
+  background: var(--blanc);
+  box-shadow: var(--ombre-douce);
 }
 
 .formulaire-ticket h2 {
-  margin: 0 0 0.5rem;
-  font-size: 1.05rem;
+  margin: 0 0 0.35rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .formulaire-ticket label {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 600;
+  color: var(--gris-texte);
 }
 
 .formulaire-ticket input,
 .formulaire-ticket textarea {
-  padding: 0.5rem 0.6rem;
-  border: 1px solid #c9ced8;
-  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  border: 1.5px solid var(--gris-bordure);
+  border-radius: 8px;
   font: inherit;
+  color: var(--gris-fonce);
+  background: var(--gris-fond);
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+  resize: vertical;
+}
+
+.formulaire-ticket input::placeholder,
+.formulaire-ticket textarea::placeholder {
+  color: #9aa1ac;
+}
+
+.formulaire-ticket input:focus,
+.formulaire-ticket textarea:focus {
+  outline: none;
+  border-color: var(--bleu-primaire);
+  background: var(--blanc);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
 
 .erreur-formulaire {
   margin: 0;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  background: #fdecec;
-  border: 1px solid #f5c2c0;
-  color: #b3261e;
-  font-size: 0.9rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  background: var(--rouge-fond);
+  border: 1px solid var(--rouge-bordure);
+  color: var(--rouge);
+  font-size: 0.88rem;
+  font-weight: 500;
+  animation: fondu-entree 0.25s ease both;
 }
 
 .formulaire-ticket button {
   align-self: flex-start;
-  padding: 0.55rem 1.1rem;
+  margin-top: 0.25rem;
+  padding: 0.6rem 1.4rem;
   border: none;
-  border-radius: 6px;
-  background: #2563eb;
-  color: #fff;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--bleu-primaire), var(--bleu-fonce));
+  color: var(--blanc);
   font: inherit;
+  font-weight: 600;
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+  transition: box-shadow var(--transition), transform var(--transition), background var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.formulaire-ticket button:hover:not(:disabled) {
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
+  transform: translateY(-1px);
+}
+
+.formulaire-ticket button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
 .formulaire-ticket button:disabled {
-  background: #9db4f0;
+  background: #b9c8ef;
+  box-shadow: none;
   cursor: not-allowed;
+}
+
+/* Spinner dans le bouton pendant l'envoi */
+.formulaire-ticket button:disabled::before {
+  content: '';
+  width: 0.95rem;
+  height: 0.95rem;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: var(--blanc);
+  border-radius: 50%;
+  animation: rotation 0.7s linear infinite;
 }

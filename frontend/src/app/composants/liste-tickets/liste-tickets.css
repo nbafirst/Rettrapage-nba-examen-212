@@ -1,77 +1,151 @@
 .tableau-tickets {
   width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  border: 1px solid #e2e5ec;
-  border-radius: 8px;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--blanc);
+  border: 1px solid var(--gris-bordure);
+  border-radius: var(--rayon);
   overflow: hidden;
   font-size: 0.92rem;
+  box-shadow: var(--ombre-douce);
 }
 
 .tableau-tickets th,
 .tableau-tickets td {
-  padding: 0.6rem 0.75rem;
+  padding: 0.75rem 0.9rem;
   border-bottom: 1px solid #eef0f4;
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
 }
 
 .tableau-tickets th {
-  background: #f6f7fb;
-  font-size: 0.8rem;
+  background: var(--gris-fond);
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: #57606f;
+  letter-spacing: 0.06em;
+  color: var(--gris-texte);
+  border-bottom: 1px solid var(--gris-bordure);
+}
+
+.tableau-tickets tbody tr {
+  transition: background var(--transition);
+}
+
+.tableau-tickets tbody tr:hover {
+  background: var(--bleu-fond);
 }
 
 .tableau-tickets tbody tr:last-child td {
   border-bottom: none;
 }
 
-.badge {
-  display: inline-block;
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
+/* Colonne ID discrète */
+.tableau-tickets td:first-child {
+  color: var(--gris-texte);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+  width: 3.5rem;
+}
+
+/* Titre en gras */
+.tableau-tickets td:nth-child(2) {
   font-weight: 600;
 }
 
+/* Description tronquée proprement */
+.tableau-tickets td:nth-child(3) {
+  color: var(--gris-texte);
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------- Badge statut avec pastille ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.22rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.badge::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: currentColor;
+}
+
 .badge.ouvert {
-  background: #e5f6ec;
-  color: #1a7f37;
+  background: var(--vert-fond);
+  color: var(--vert);
 }
 
 .badge.en_cours {
-  background: #fff4d6;
-  color: #8a6d00;
+  background: var(--jaune-fond);
+  color: var(--jaune);
 }
 
 .badge.ferme {
   background: #eef0f4;
-  color: #57606f;
+  color: var(--gris-texte);
 }
 
+/* ---------- Bouton fermer ---------- */
 .bouton-fermer {
-  padding: 0.3rem 0.75rem;
-  border: 1px solid #d33;
-  border-radius: 6px;
-  background: #fff;
-  color: #b3261e;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--rouge-bordure);
+  border-radius: 8px;
+  background: var(--blanc);
+  color: var(--rouge);
   font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
+  transition: background var(--transition), border-color var(--transition),
+              box-shadow var(--transition), transform var(--transition);
 }
+
+.bouton-fermer:hover:not(:disabled) {
+  background: var(--rouge-fond);
+  border-color: var(--rouge);
+  box-shadow: 0 2px 8px rgba(179, 38, 30, 0.15);
+}
+
+.bouton-fermer:active:not(:disabled) { transform: scale(0.97); }
 
 .bouton-fermer:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
+/* ---------- Erreur de fermeture ---------- */
 .erreur-fermeture {
   margin: 0.75rem 0 0;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  background: #fdecec;
-  border: 1px solid #f5c2c0;
-  color: #b3261e;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  background: var(--rouge-fond);
+  border: 1px solid var(--rouge-bordure);
+  color: var(--rouge);
   font-size: 0.9rem;
+  font-weight: 500;
+  animation: fondu-entree 0.25s ease both;
+}
+
+/* ---------- Petits écrans : tableau horizontal scrollable ---------- */
+@media (max-width: 720px) {
+  .tableau-tickets {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .tableau-tickets td:nth-child(3) {
+    max-width: 180px;
+  }
 }
