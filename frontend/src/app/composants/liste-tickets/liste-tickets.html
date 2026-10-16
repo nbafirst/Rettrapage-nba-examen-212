@@ -1,0 +1,47 @@
+<table class="tableau-tickets">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titre</th>
+      <th>Description</th>
+      <th>Statut</th>
+      <th>Date de création</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (t of tickets(); track t.id) {
+      <tr>
+        <td>{{ t.id }}</td>
+        <td>{{ t.titre }}</td>
+        <td>{{ t.description ?? '—' }}</td>
+        <td>
+          <span class="badge" [class]="'badge ' + t.statut.toLowerCase()">{{ t.statut }}</span>
+        </td>
+        <td>{{ formaterDate(t.dateCreation) }}</td>
+        <td>
+          @if (peutFermer(t.statut)) {
+            <button
+              type="button"
+              class="bouton-fermer"
+              [disabled]="idFermetureEnCours() === t.id"
+              (click)="cliquerFermer(t)"
+            >
+              @if (idFermetureEnCours() === t.id) {
+                Fermeture…
+              } @else {
+                Fermer
+              }
+            </button>
+          } @else {
+            —
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+@if (erreurFermeture(); as msg) {
+  <p class="erreur-fermeture" role="alert">{{ msg }}</p>
+}

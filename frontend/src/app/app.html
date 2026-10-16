@@ -1,0 +1,52 @@
+<main class="conteneur">
+  <header>
+    <h1>Gestion des tickets</h1>
+    <p class="sous-titre">Épreuve rattrapage — Module Ticket</p>
+  </header>
+
+  <section class="volet-formulaire">
+    <app-formulaire-ticket (ticketCree)="rafraichir()" />
+  </section>
+
+  <section class="volet-liste">
+    <div class="barre-filtre" role="group" aria-label="Filtrer par statut">
+      <span class=" etiquette-filtre">Statut :</span>
+      @for (f of filtres; track f) {
+        <button
+          type="button"
+          class="bouton-filtre"
+          [class.actif]="filtre() === f"
+          (click)="changerFiltre(f)"
+        >
+          {{ f }}
+        </button>
+      }
+    </div>
+
+    <div class="zone-liste">
+      <!-- État 1 : chargement -->
+      @if (chargement()) {
+        <p class="etat-chargement" role="status">Chargement des tickets…</p>
+      } @else {
+        <!-- État 3 : erreur avec action de réessayer -->
+        @if (erreur(); as msg) {
+          <div class="etat-erreur" role="alert">
+            <p>{{ msg }}</p>
+            <button type="button" (click)="charger()">Réessayer</button>
+          </div>
+        } @else if (tickets().length === 0) {
+          <!-- État 4 : liste vide -->
+          <p class="etat-vide">Aucun ticket</p>
+        } @else {
+          <!-- État 2 : données -->
+          <app-liste-tickets
+            [tickets]="tickets()"
+            [idFermetureEnCours]="idFermetureEnCours()"
+            [erreurFermeture]="erreurFermeture()"
+            (fermerTicket)="fermer($event)"
+          />
+        }
+      }
+    </div>
+  </section>
+</main>

@@ -1,0 +1,34 @@
+<form (ngSubmit)="soumettre()" class="formulaire-ticket">
+  <h2>Nouveau ticket</h2>
+
+  <label for="titre">Titre (obligatoire)</label>
+  <input
+    id="titre"
+    name="titre"
+    type="text"
+    [(ngModel)]="titre"
+    placeholder="Ex. : Serveur en panne"
+    autocomplete="off"
+  />
+
+  <label for="description">Description (facultative)</label>
+  <textarea
+    id="description"
+    name="description"
+    rows="3"
+    [(ngModel)]="description"
+    placeholder="Détails éventuels…"
+  ></textarea>
+
+  @if (erreurCreation(); as msg) {
+    <p class="erreur-formulaire" role="alert">{{ msg }}</p>
+  }
+
+  <button type="submit" [disabled]="!peutSoumettre">
+    @if (soumissionEnCours()) {
+      Envoi en cours…
+    } @else {
+      Créer le ticket
+    }
+  </button>
+</form>

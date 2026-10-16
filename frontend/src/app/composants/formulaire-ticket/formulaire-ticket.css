@@ -1,0 +1,53 @@
+.formulaire-ticket {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: 1px solid #e2e5ec;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  background: #fff;
+}
+
+.formulaire-ticket h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+}
+
+.formulaire-ticket label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.formulaire-ticket input,
+.formulaire-ticket textarea {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid #c9ced8;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.erreur-formulaire {
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  background: #fdecec;
+  border: 1px solid #f5c2c0;
+  color: #b3261e;
+  font-size: 0.9rem;
+}
+
+.formulaire-ticket button {
+  align-self: flex-start;
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.formulaire-ticket button:disabled {
+  background: #9db4f0;
+  cursor: not-allowed;
+}
